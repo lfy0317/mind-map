@@ -29,7 +29,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/x-glorious/bade.git"
+    "url": "git+https://github.com/lfy0317/mind-map.git"
   },
   "dependencies": {
     "@kdev/bade-mind-core": "^1.0.26",
