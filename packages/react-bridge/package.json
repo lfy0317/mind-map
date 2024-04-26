@@ -32,7 +32,7 @@
     "url": "git+https://github.com/lfy0317/mind-map.git"
   },
   "dependencies": {
-    "@kdev/bade-mind-core": "^1.0.26",
+    "mind-core": "^0.0.1",
     "ahooks": "^3.7.11",
     "classnames": "^2.3.1",
     "d3": "^7.4.4"

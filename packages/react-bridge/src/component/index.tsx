@@ -8,7 +8,7 @@ import React, {
   useState
 } from 'react'
 
-import { Mind } from '@kdev/bade-mind-core'
+import { Mind } from 'mind-core'
 import Classnames from 'classnames'
 
 import { MindReact } from '../'

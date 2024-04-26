@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import { Mind } from '@kdev/bade-mind-core'
+import { Mind } from 'mind-core'
 import Classnames from 'classnames'
 
 import { useDrag } from '../hook/use-drag'

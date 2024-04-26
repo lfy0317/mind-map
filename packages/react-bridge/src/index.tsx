@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Mind } from '@kdev/bade-mind-core'
+import { Mind } from 'mind-core'
 
 import { View as _View } from './component'
 

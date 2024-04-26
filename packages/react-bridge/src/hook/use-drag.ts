@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier*/
 import { useEffect, useRef, useState } from 'react'
 
-import { Mind } from  '@kdev/bade-mind-core'
+import { Mind } from  'mind-core'
 import * as D3 from 'd3'
 
 import { MindReact } from '../index'

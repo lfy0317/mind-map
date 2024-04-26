@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
-import { Mind } from  '@kdev/bade-mind-core'
+import { Mind } from  'mind-core'
 
 import { Axis } from './axis'
 

@@ -1,5 +1,5 @@
 {
-  "name": "@kdev/mind-map",
+  "name": "mind-map",
   "version": "0.0.1",
   "private": true,
   "description": "mind-map",
@@ -9,7 +9,7 @@
     "bootstrap": "./node_modules/.bin/lerna bootstrap",
     "watch": "npx lerna run watch",
     "build": "npx lerna run build",
-    "demo": "npx lerna run demo --scope=@kdev/bade-mind-react-bridge",
+    "demo": "npx lerna run demo --scope=mind-react-bridge",
     "publish": "npx lerna version --no-private && npx lerna publish"
   },
   "keywords": [

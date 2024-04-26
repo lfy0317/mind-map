@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import {Mind} from '@kdev/bade-mind-core';
+import {Mind} from 'mind-core';
 export default function useMind(
   mind?: Mind.Graphic
 ): Mind.Graphic {
