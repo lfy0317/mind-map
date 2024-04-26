@@ -1,6 +1,9 @@
 {
-  "name": "mind-core",
+  "name": "@sleephead/mind-core",
   "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "",
   "main": "./lib/index.js",
   "module": "./lib/index.module.js",

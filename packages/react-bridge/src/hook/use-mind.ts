@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import {Mind} from 'mind-core';
+import {Mind} from '@sleephead/mind-core';
 export default function useMind(
   mind?: Mind.Graphic
 ): Mind.Graphic {

@@ -1,5 +1,5 @@
 {
-  "name": "mind-react-bridge",
+  "name": "@sleephead/mind-react-bridge",
   "version": "0.0.1",
   "description": "",
   "main": "./lib/index.js",
@@ -32,7 +32,7 @@
     "url": "git+https://github.com/lfy0317/mind-map.git"
   },
   "dependencies": {
-    "mind-core": "^0.0.1",
+    "@sleephead/mind-core": "^0.0.1",
     "ahooks": "^3.7.11",
     "classnames": "^2.3.1",
     "d3": "^7.4.4"

@@ -1,2 +1,2 @@
 export * from './src'
-export { Mind } from  'mind-core'
+export { Mind } from  '@sleephead/mind-core'

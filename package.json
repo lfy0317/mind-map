@@ -9,13 +9,13 @@
     "bootstrap": "./node_modules/.bin/lerna bootstrap",
     "watch": "npx lerna run watch",
     "build": "npx lerna run build",
-    "demo": "npx lerna run demo --scope=mind-react-bridge",
+    "demo": "npx lerna run demo --scope=@sleephead/mind-react-bridge",
     "publish": "npx lerna version --no-private && npx lerna publish"
   },
   "keywords": [
     "mind-map"
   ],
-  "author": "lichuanjie",
+  "author": "liufuyuan",
   "license": "ISC",
   "devDependencies": {
     "@lopatnov/rollup-plugin-uglify": "^2.1.2",

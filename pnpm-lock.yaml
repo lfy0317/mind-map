@@ -95,19 +95,19 @@ importers:
 
   packages/react-bridge:
     specifiers:
+      '@sleephead/mind-core': ^0.0.1
       '@types/d3': ^7.1.0
       '@types/react': ^18.0.5
       ahooks: ^3.7.11
       classnames: ^2.3.1
       d3: ^7.4.4
-      mind-core: ^0.0.1
       react: ^16.8.x || ~17 || ~18
       react-dom: ^16.8.x || ~17 || ~18
     dependencies:
+      '@sleephead/mind-core': link:../core
       ahooks: 3.7.11_react@18.3.1
       classnames: 2.5.1
       d3: 7.9.0
-      mind-core: link:../core
     devDependencies:
       '@types/d3': 7.4.3
       '@types/react': 18.3.0
@@ -3865,7 +3865,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001612
-      electron-to-chromium: 1.4.749
+      electron-to-chromium: 1.4.750
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13_browserslist@4.23.0
     dev: true
@@ -5007,8 +5007,8 @@ packages:
       safer-buffer: 2.1.2
     dev: true
 
-  /electron-to-chromium/1.4.749:
-    resolution: {integrity: sha512-LRMMrM9ITOvue0PoBrvNIraVmuDbJV5QC9ierz/z5VilMdPOVMjOtpICNld3PuXuTZ3CHH/UPxX9gHhAPwi+0Q==}
+  /electron-to-chromium/1.4.750:
+    resolution: {integrity: sha512-9ItEpeu15hW5m8jKdriL+BQrgwDTXEL9pn4SkillWFu73ZNNNQ2BKKLS+ZHv2vC9UkNhosAeyfxOf/5OSeTCPA==}
     dev: true
 
   /emittery/0.10.2:
@@ -5901,7 +5901,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.1.2
+      minimatch: 3.0.8
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true

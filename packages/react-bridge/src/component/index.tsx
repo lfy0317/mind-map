@@ -8,7 +8,7 @@ import React, {
   useState
 } from 'react'
 
-import { Mind } from 'mind-core'
+import { Mind } from '@sleephead/mind-core'
 import Classnames from 'classnames'
 
 import { MindReact } from '../'

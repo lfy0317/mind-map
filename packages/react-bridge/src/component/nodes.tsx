@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useCallback, useMemo, useRef, useState, useEffect } from 'react'
 import * as ReactDOM from 'react-dom';
-import { Mind } from 'mind-core'
+import { Mind } from '@sleephead/mind-core'
 import Classnames from 'classnames'
 
 import { useDrag } from '../hook/use-drag'

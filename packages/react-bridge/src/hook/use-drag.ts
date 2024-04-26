@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier*/
 import { useEffect, useRef, useState } from 'react'
 
-import { Mind } from  'mind-core'
+import { Mind } from  '@sleephead/mind-core'
 import * as D3 from 'd3'
 
 import { MindReact } from '../index'

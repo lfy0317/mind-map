@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Mind } from 'mind-core'
+import { Mind } from '@sleephead/mind-core'
 
 import { View as _View } from './component'
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
-import { Mind } from  'mind-core'
+import { Mind } from  '@sleephead/mind-core'
 
 import { Axis } from './axis'
 
