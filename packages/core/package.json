@@ -1,0 +1,45 @@
+{
+  "name": "@kdev/bade-mind-core",
+  "version": "1.0.26",
+  "description": "",
+  "main": "./lib/index.js",
+  "module": "./lib/index.module.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/x-glorious/bade.git"
+  },
+  "scripts": {
+    "test": "jest",
+    "demo": "parcel demo/index.html",
+    "clear": "rm -rf lib",
+    "build": "npm run clear && rollup -c",
+    "watch": "npm run clear && rollup -cw"
+  },
+  "keywords": [
+    "mind",
+    "javascript",
+    "typescript",
+    "custom",
+    "render props",
+    "svg",
+    "dom",
+    "bade"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "classnames": "^2.3.1",
+    "d3": "^7.4.4",
+    "dagre": "^0.8.5",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.1.0",
+    "@types/dagre": "^0.7.47",
+    "@types/lodash": "^4.14.181"
+  }
+}

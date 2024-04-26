@@ -1,0 +1,245 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable prettier/prettier*/
+import { useEffect, useRef, useState } from 'react'
+
+import { Mind } from  '@kdev/bade-mind-core'
+import * as D3 from 'd3'
+
+import { MindReact } from '../index'
+import { useShadowState } from './use-shadow-state'
+import useThrottleFn from './use-throttle';
+
+export const useDrag = (context: {
+  mind?: Mind.Graphic
+  draggableNodeWrapperQualifier: string
+  nodeWrapperClassName: string
+  nodesContainer: HTMLDivElement | null
+  onDragStart?: MindReact.DragStartEvent
+  onDrag?: MindReact.DragEvent
+  onDragEnd?: MindReact.DragEndEvent
+  sizeof: (id: string) => Mind.Size | undefined
+  renderNodes: MindReact.Node[]
+  data?: MindReact.Root
+  renderChangeToggle: number
+}) => {
+  const {
+    mind,
+    draggableNodeWrapperQualifier,
+    nodeWrapperClassName,
+    nodesContainer,
+    onDrag,
+    onDragEnd,
+    onDragStart,
+    sizeof,
+    renderNodes,
+    data,
+    renderChangeToggle
+  } = context
+
+  // 被拖动的节点
+  const [dragNode, setDragNode, dragNodeShadow] = useShadowState<MindReact.Node | undefined>(
+    undefined
+  )
+  // 被拖动节点附着的节点
+  const [dragAttachedNode, setDragAttachedNode, dragAttachedNodeShadow] = useShadowState<
+    MindReact.Node | undefined
+  >(undefined)
+  // 拖动操作控制器
+  const dragController = useRef<Mind.Drag | undefined>(undefined)
+  // 拖动镜像节点位置
+  const [dragMirrorPosition, setDragMirrorPosition, dragMirrorPositionShadow] =
+    useShadowState<Mind.Coordinate>({
+      x: 0,
+      y: 0
+    })
+  // 被拖动节点在附着的节点的位子
+  const [dragIndex, setDragIndex, dragIndexShadow ] = useShadowState<number | undefined>(
+    undefined
+  )
+
+  const {run} = useThrottleFn((value) => {
+    setDragIndex(value);
+  }, {
+    wait: 100,
+  });
+  // 当前是否正在拖动
+  const [isInDragging, setIsInDragging] = useState(false)
+  // 拖动节点镜像节点相关信息
+  const dragMirrorInfo = useRef({
+    origin: { x: 0, y: 0 },
+    size: { height: 0, width: 0 },
+    start: { x: 0, y: 0 }
+  })
+  const dragOrientation = useRef<Mind.Orientation | undefined>(undefined)
+
+  useEffect(() => {
+    if (mind && nodesContainer) {
+      D3.select(nodesContainer)
+        .selectAll(draggableNodeWrapperQualifier)
+        .call(
+          D3.drag()
+            .on('start', (e) => {
+              // const dragElement: HTMLElement = e.sourceEvent.path?.find((item) =>
+              //   item.className.includes(nodeWrapperClassName)
+              // )
+              const dragElement = e.sourceEvent.target?.closest(`.${nodeWrapperClassName}`)
+              if (dragElement) {
+                const dragId = dragElement.getAttribute('data-node-id')!
+                const origin = mind.getNodeAnchorCoordinate(dragId)
+                const size = sizeof(dragId)
+
+                if (origin) {
+                  // 记录开始点
+                  dragMirrorInfo.current.start.x = e.x
+                  dragMirrorInfo.current.start.y = e.y
+                  // 原点（左上角原始位置）
+                  dragMirrorInfo.current.origin.x = origin.x
+                  dragMirrorInfo.current.origin.y = origin.y
+                  setDragMirrorPosition({
+                    x: origin.x,
+                    y: origin.y
+                  })
+                }
+                if (size) {
+                  // 记录拖动节点尺寸
+                  dragMirrorInfo.current.size.width = size.width
+                  dragMirrorInfo.current.size.height = size.height
+                }
+
+                const dragNode = mind.getNode(dragId)
+                if (dragNode) {
+                  // 调用拖动开始事件
+                  onDragStart &&
+                    onDragStart({
+                      node: dragNode
+                    })
+                  setDragNode(dragNode as MindReact.Node)
+                  dragController.current = mind.dragControllerBuilder(dragId)
+                }
+              }
+            })
+            .on('drag', (e) => {
+              if (dragController.current) {
+                const scale = mind.getTransform().scale
+                const diff: Mind.Coordinate = {
+                  x: (e.x - dragMirrorInfo.current.start.x) / scale,
+                  y: (e.y - dragMirrorInfo.current.start.y) / scale
+                }
+                // 在节点编辑态（暂停），不允许拖拽
+                if (mind.isPause) {
+                  return;
+                }
+                const mirrorCenter: Mind.Coordinate = {
+                  x:
+                    diff.x +
+                    dragMirrorInfo.current.origin.x +
+                    dragMirrorInfo.current.size.width / 2,
+                  y:
+                    diff.y +
+                    dragMirrorInfo.current.origin.y +
+                    dragMirrorInfo.current.size.height / 2
+                }
+                setDragMirrorPosition({
+                  x: diff.x + dragMirrorInfo.current.origin.x,
+                  y: diff.y + dragMirrorInfo.current.origin.y
+                })
+                const target = dragController.current.drag(
+                  {
+                    ...mirrorCenter
+                  },
+                  renderNodes.filter(node => node.droppable === undefined ? true : node.droppable) as Mind.Node[]
+                )
+                dragOrientation.current = target?.orientation
+                // 调用拖动中事件
+                onDrag &&
+                  onDrag({
+                    attach:
+                      target && target.attach && target.orientation
+                        ? {
+                          orientation: target.orientation,
+                          parent: target.attach
+                        }
+                        : undefined,
+                    mirrorPosition: { ...mirrorCenter },
+                    node: dragNodeShadow.current!
+                  })
+                setIsInDragging(true)
+
+                let index = -1
+                if (target?.attach) {
+                  let children = target?.attach.children
+                  index = dragController.current.calcDropIndex(
+                    children as Mind.Node[],
+                    {
+                      x: dragMirrorPositionShadow.current.x + dragMirrorInfo.current.size.width / 2,
+                      y: dragMirrorPositionShadow.current.y + dragMirrorInfo.current.size.height / 2
+                    },
+                    dragNodeShadow.current! as Mind.Node,
+                    target?.attach as Mind.Node
+                  )
+                }
+                run(dragAttachedNodeShadow.current && dragOrientation.current ? index : undefined);
+
+                setDragAttachedNode(target?.attach)
+              }
+            })
+            .on('end', (e) => {
+              const diff: Mind.Coordinate = {
+                x: e.x - dragMirrorInfo.current.start.x,
+                y: e.y - dragMirrorInfo.current.start.y,
+              }
+              // 通知控制器已经结束拖动
+              if (dragController.current) {
+                const attachNode = dragAttachedNodeShadow.current
+                let index = -1
+                if (attachNode) {
+                  let children = attachNode.children
+                  index = dragController.current.calcDropIndex(
+                    children as Mind.Node[],
+                    {
+                      x: dragMirrorPositionShadow.current.x + dragMirrorInfo.current.size.width / 2,
+                      y: dragMirrorPositionShadow.current.y + dragMirrorInfo.current.size.height / 2
+                    },
+                    dragNodeShadow.current! as Mind.Node,
+                    attachNode as Mind.Node
+                  )
+                }
+
+                dragController.current.end()
+                dragController.current = undefined
+                if (Math.abs(diff.x) > 10 || Math.abs(diff.y) > 10) {
+                  // 调用拖动结束事件
+                  onDragEnd &&
+                  onDragEnd({
+                    attach: dragAttachedNodeShadow.current && dragOrientation.current ? {
+                      index,
+                      orientation: dragOrientation.current,
+                      parent: dragAttachedNodeShadow.current
+                    } : undefined,
+                    node: dragNodeShadow.current!,
+                    original:{
+                      orientation: mind.getNodeOrientation(dragNodeShadow.current!.id)!,
+                      parent: mind.getParent(dragNodeShadow.current!.id)!
+                    },
+                  })
+                } else {
+                  mind.options.event.onClick?.(e.sourceEvent, 'node', dragNodeShadow.current!)
+                }
+              }
+              // 清空数据
+              setDragNode(undefined)
+              setDragAttachedNode(undefined)
+              setIsInDragging(false)
+              dragOrientation.current = undefined
+            })
+        )
+    }
+  }, [mind, renderChangeToggle, data, renderNodes, onDragStart, onDrag, onDragEnd, nodesContainer])
+  return {
+    dragAttachedNode,
+    dragMirrorPosition,
+    dragNode,
+    isInDragging,
+    dragIndex,
+  }
+}

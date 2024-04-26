@@ -1,0 +1,50 @@
+{
+  "name": "@kdev/bade-mind-react-bridge",
+  "version": "1.0.31",
+  "description": "",
+  "main": "./lib/index.js",
+  "module": "./lib/index.module.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "demo": "parcel demo/index.html",
+    "clear": "rm -rf lib",
+    "build": "npm run clear && rollup -c",
+    "watch": "npm run clear && rollup -cw"
+  },
+  "keywords": [
+    "mind",
+    "javascript",
+    "react",
+    "typescript",
+    "custom",
+    "render props",
+    "svg",
+    "dom",
+    "bade"
+  ],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/x-glorious/bade.git"
+  },
+  "dependencies": {
+    "@kdev/bade-mind-core": "^1.0.26",
+    "ahooks": "^3.7.11",
+    "classnames": "^2.3.1",
+    "d3": "^7.4.4"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.1.0",
+    "@types/react": "^18.0.5",
+    "react": "^16.8.x || ~17 || ~18",
+    "react-dom": "^16.8.x || ~17 || ~18"
+  },
+  "peerDependencies": {
+    "react": "^16.8.x || ~17 || ~18",
+    "react-dom": "^16.8.x || ~17 || ~18"
+  }
+}

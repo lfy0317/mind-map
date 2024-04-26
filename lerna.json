@@ -1,0 +1,18 @@
+{
+  "packages": [
+    "packages/**/*"
+  ],
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "**/__tests__/**",
+        "**/scripts/**"
+      ],
+      "message": "chore: publish %s"
+    },
+    "bootstrap": {
+      "hoist": true
+    }
+  },
+  "version": "independent"
+}
