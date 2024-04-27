@@ -32,7 +32,7 @@
     "dom",
     "bade"
   ],
-  "author": "",
+  "author": "liufuyuan",
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.3.1",

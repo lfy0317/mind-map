@@ -179,7 +179,9 @@ export const Nodes = (props: NodesProps) => {
   // 渲染节点
   const renderPortal = useMemo(() => {
     return renderNodes.map(node => {
-      const visible = mind?.judgeNodeVisible(node.id) || node.alwaysVisible
+      const visible = mind?.judgeNodeVisible(node.id) || node.alwaysVisible;
+      console.log(eleCacheMap.current.get(String(node.id)));
+      
       if (eleCacheMap.current.has(String(node.id)) && visible) {
         return ReactDOM.createPortal(render(node, false), eleCacheMap.current.get(String(node.id)))
       }

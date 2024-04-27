@@ -1,58 +1,20 @@
 import * as React from 'react'
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import ReactDom from 'react-dom'
-import {root, generateChildren} from './data';
-import { Mind, MindReact } from '../lib'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import { root, generateChildren } from './data';
+import { Mind, MindReact } from '../lib';
 import mindContext from '../src/component/MindContext';
-
+import { RenderNode } from './node/RenderNode';
 
 // for(let i = 0; i < 100;  i ++ ) {
 //   root.children.push(...generateChildren(2))
 // }
-const Render = React.memo((props: {
-  node: MindReact.Node;
-  mind: any;
-}) => {
-  const { node, mind } = props;
-  // const onClick=(e) => {
-  //   mind.setAnchor(node.id)
-  //   if (node.id !== root.id) {
-  //     if (!node.children) {
-  //       node.children = []
-  //     }
-  //     mind.addNode(node.id, node.children.length, generateChildren()[0])
-  //   }
-  // }
-  const onFold=() => {
-    mind.toggleFold(node.id);
-  }
-
-  return (
-    <div
-      className={'node'}
-      // onClick={onClick}
-      style={{
-        width: node.type === 'CASE' ? '100px' : '200px',
-        height: node.type === 'CASE' ? '50px' : '100px'
-      }}
-    >
-      {node.attachData}
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-          onFold()
-        }}
-        className={'fold'}
-      ></div>
-    </div>
-  )
-});
 
 const options: Mind.Options = {
   childAlignMode: Mind.ChildAlignMode.structured,
-  lineStyle: Mind.LinkStyle.bezier,
-  nodeSeparate: 20,
-  rankSeparate: 60,
+  lineStyle: Mind.LinkStyle.line,
+  nodeSeparate: 10,
+  rankSeparate: 40,
   size: {
     width: 200,
     height: 100,
@@ -95,29 +57,11 @@ const Demo = () => {
         })
       }
     }, 1000)
-    // 测试anchors
-    setTimeout(() => {
-      mind.addNode('p-1', generateChildren()[0])
-      mind.addNode('p-1', generateChildren()[0])
-      mind.addNode('p-1', generateChildren()[0])
-    }, 3000)
-    setTimeout(() => {
-      mind.addNode('root', generateChildren()[0])
-    }, 6000)
-    setTimeout(() => {
-      mind.addNode('root', generateChildren()[0])
-    }, 6000)
-    setTimeout(() => {
-      mind.isPause = false
-    }, 5000)
-    setTimeout(() => {
-      mind.setNodeToCenter('p-4')
-    }, 5000)
   }, []);
 
   return (
     <>
-      <div style={{position: 'absolute', display: 'flex', width: '100%', lineHeight: '30px', zIndex: 10000}}>
+      <div style={{ position: 'absolute', display: 'flex', width: '100%', lineHeight: '30px', zIndex: 10000 }}>
         <button
           onClick={() => {
             mind.toggleFoldByType('DIR', true);
@@ -166,17 +110,13 @@ const Demo = () => {
         </button>
       </div>
       <MindReact.View
-        // controlled={false}
         mind={mind}
         data={data}
         anchor={anchor}
         scrollbar={true}
         onDragEnd={onDragEnd}
         render={(node) => {
-          return <Render
-            node={node}
-            mind={mind}
-          />;
+          return <RenderNode node={node} mind={mind} />;
         }}
         options={{
           ...options,
@@ -201,4 +141,8 @@ const Demo = () => {
     </>
   )
 }
-ReactDom.render(<Demo />, document.getElementById('root'))
+
+/**
+ * 将demo渲染到root dom上
+ */
+createRoot(document.getElementById('root') as Element).render(<Demo />);
