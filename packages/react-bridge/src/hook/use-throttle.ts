@@ -1,4 +1,5 @@
-import throttle from 'lodash/throttle';
+// @ts-ignore
+import { throttle } from 'lodash';
 import { useMemo, useRef, useEffect } from 'react';
 
 type noop = (...args: any[]) => any;
@@ -25,7 +26,8 @@ const useUnmount = (fn: () => void) => {
     [],
   );
 };
-function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
+
+function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions): any {
 
   const fnRef = useLatest(fn);
 
@@ -53,4 +55,5 @@ function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
   };
 }
 
+// @ts-ignore
 export default useThrottleFn;

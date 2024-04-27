@@ -57,10 +57,14 @@ export const Axis = (props: AxisProps) => {
     const result: React.CSSProperties = {}
 
     if (vertical) {
+      // @ts-ignore
       result.height = `${thumbSize}px`
+      // @ts-ignore
       result.transform = `translateY(${moveDistance}px)`
     } else {
+      // @ts-ignore
       result.width = `${thumbSize}px`
+      // @ts-ignore
       result.transform = `translateX(${moveDistance}px)`
     }
 

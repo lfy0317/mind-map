@@ -35,12 +35,14 @@
     "@sleephead/mind-core": "^0.0.1",
     "ahooks": "^3.7.11",
     "classnames": "^2.3.1",
-    "d3": "^7.4.4"
+    "d3": "^7.4.4",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/d3": "^7.1.0",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.2.25",
+    "@types/lodash": "^4.14.181",
     "react": "^16.8.x || ~17 || ~18",
     "react-dom": "^16.8.x || ~17 || ~18"
   },
