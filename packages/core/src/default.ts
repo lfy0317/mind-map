@@ -19,7 +19,7 @@ const generateOptions = (): Mind.Options => ({
       zoom: (_e) => {}
     }
   },
-  lineStyle: Mind.LinkStyle.bezier,
+  lineStyle: Mind.LinkStyle.line,
   nodeSeparate: 100,
   rankSeparate: 100,
   viewportPreloadPadding: 0,

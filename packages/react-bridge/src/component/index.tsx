@@ -78,10 +78,12 @@ export const View = (props: MindReact.ViewProps) => {
       setIsInDragMove(false)
     }
   }, [])
-  
+
   const options = useMemo<Mind.Options>(() => {
     // 展开，防止修改源数据
-    const wrapper: Mind.Options = { ...(settingOptions || {}) }
+    const wrapper: Mind.Options = {
+      ...(settingOptions || {})
+    };
     wrapper.callback = { ...(wrapper.callback || {}) }
     wrapper.event = { ...(wrapper.event || {}) }
 

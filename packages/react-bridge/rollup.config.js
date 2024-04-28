@@ -1,9 +1,9 @@
-import * as reactDom from 'react-dom'
+import * as reactDom from 'react-dom';
 
 // import uglify from '@lopatnov/rollup-plugin-uglify'
-import commonjs from '@rollup/plugin-commonjs'
-import postcss from 'rollup-plugin-postcss'
-import typescript from 'rollup-plugin-typescript2'
+import commonjs from '@rollup/plugin-commonjs';
+import postcss from 'rollup-plugin-postcss';
+import typescript from 'rollup-plugin-typescript2';
 
 import pkg from './package.json'
 
